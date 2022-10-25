@@ -47,6 +47,7 @@ class Game extends React.Component {
             bordSize: props.bordSize,
             stepNumber: 0,
             xIsNext: true,
+            isReverse: false,
         };
     }
     handleClick(x, y) {
@@ -104,7 +105,16 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <button onClick={() => {
+                        this.setState({
+                            isReverse: !this.state.isReverse
+                        })
+                    }}>
+                        {
+                            this.state.isReverse ? '降順にする' : '昇順にする'
+                        }
+                    </button>
+                    <ol>{this.state.isReverse ? moves : moves.reverse()}</ol>
                 </div>
             </div>
         );
@@ -142,4 +152,4 @@ function copySqueres(origin) {
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Game bordSize={3}/>);
+root.render(<Game bordSize={3} />);
