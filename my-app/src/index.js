@@ -109,7 +109,11 @@ class Game extends React.Component {
             status = 'Winner: ' + winner[0];
             highlightLine = winner[1]
         } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            if (calculateDraw(current.squares)) {
+                status = 'Draw game';
+            } else {
+                status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            }
         }
         return (
             <div className="game">
@@ -132,6 +136,16 @@ class Game extends React.Component {
             </div>
         );
     }
+}
+
+function calculateDraw(squares) {
+    for (const _squares of squares) {
+        const emptySquares = _squares.filter(value => value === null)
+        if (emptySquares.length) {
+            return false
+        }
+    }
+    return true
 }
 
 function calculateWinner(squares) {
